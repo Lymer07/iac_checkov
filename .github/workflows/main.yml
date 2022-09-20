@@ -9,7 +9,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@master
       - name: wget the config file
-        run:  mkdir config && wget -O config/checkov_config.yaml https://github.com/Lymer07/iac_checkov/master/
+        run:  mkdir config && wget -O config/checkov_config.yaml https://github.com/Lymer07/iac_checkov/master/config_checkov.yaml
       - name: print the 
         run:  'ls -al'
       - name:  pull the docker
