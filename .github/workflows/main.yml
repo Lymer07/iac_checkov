@@ -10,7 +10,7 @@ jobs:
       - name: wget
         uses: wei/wget@v1
         with:
-          args: -O config/checkov_config.yaml https://raw.githubusercontent.com/Lymer07/iac_checkov/master/config_checkov.yaml
+          args: -O config/checkov_config.yaml https://raw.githubusercontent.com/Lymer07/iac_checkov/master/config_checkov.yaml?token=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
       - name: Run Checkov action
         id: checkov
         uses: bridgecrewio/checkov-action@master
