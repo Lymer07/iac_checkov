@@ -1,0 +1,52 @@
+
+provider "aws" {
+  region = "eu-west-1"
+}
+data "aws_kms_key" "my_kms_key" {
+  key_id = "alias/my-key"
+}
+data "aws_vpc" "vpc" {
+  tags = {
+    Name = "vpc"
+  }
+}
+data "aws_subnet_ids" "database" {
+  vpc_id = data.aws_vpc.vpc.id
+  tags = {
+    Name = "database"
+  }
+}
+resource "aws_db_subnet_group" "aurora" {
+  name       = "aurora"
+  subnet_ids = [data.aws_subnet_ids.database.ids]
+  tags = {
+    Name = "database"
+  }
+}
+data "aws_security_group" "database" {
+  name = "database"
+}
+resource "aws_rds_cluster" "aurora" {
+  apply_immediately         = true
+  backup_retention_period   = 7
+  cluster_identifier        = "mydatabase"
+  engine                    = "aurora"
+  database_name             = "main"
+  db_subnet_group_name      = aws_db_subnet_group.aurora.id
+  final_snapshot_identifier = "final"
+  master_password           = "mysecretpassword"
+  master_username           = "admin"
+  vpc_security_group_ids    = [data.aws_security_group.database.id]
+  storage_encrypted = true
+  kms_key_id = "arn:aws:kms:us-west-2:111122223333:key/"
+  enabled_cloudwatch_logs_exports = ["audit", "error", "general", "slowquery"]
+}
+resource "aws_rds_cluster_instance" "aurora" {
+  count                = 2
+  apply_immediately    = true
+  identifier           = "mydatabase-${count.index}"
+  cluster_identifier   = aws_rds_cluster.aurora.id
+  db_subnet_group_name = aws_db_subnet_group.aurora.id
+  instance_class       = "db.r4.large"
+  publicly_accessible  = false
+}
