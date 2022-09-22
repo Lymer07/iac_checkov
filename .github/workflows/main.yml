@@ -1,5 +1,4 @@
 # This is the checkov workflow with actions
-
 on: [push]
 jobs:
   checkov-job:
@@ -8,12 +7,23 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@master
-      - name: wget the config file
-        run:  mkdir config && wget -O config/checkov_config.yaml https://raw.githubusercontent.com/Lymer07/iac_checkov/master/config_checkov.yaml
-      - name: print the 
-        run:  'ls -al'
-      - name:  pull the docker
-        run:  docker pull bridgecrew/checkov
-      - name: mount the 2 volumes and run checkov
-        run:  docker run --tty --volume $(pwd):/tf --workdir /tf bridgecrew/checkov --directory tf/terraformcode  --config-file /tf/config/checkov_config.yaml --external-checks-git https://github.com/Lymer07/iac_checkov.git//custom_checks
-
+      - name: wget
+        uses: wei/wget@v1
+        with:
+          args: -O config/checkov_config.yaml https://raw.githubusercontent.com/Lymer07/iac_checkov/master/config_checkov.yaml
+      - name: Run Checkov action
+        id: checkov
+        uses: bridgecrewio/checkov-action@master
+        with:
+          #directory: terraformcode/
+          #check: CKV_AWS_1 # optional: run only a specific check_id. can be comma separated list
+          #skip_check: CKV_AWS_2 # optional: skip a specific check_id. can be comma separated list
+          #quiet: true # optional: display only failed checks
+          #soft_fail: true # optional: do not return an error code if there are failed checks
+          #framework: cloudformation,terraform # optional: run only on a specific infrastructure {cloudformation,terraform,kubernetes,all}
+          #output_format: json # optional: the output format, one of: cli, json, junitxml, github_failed_only, or sarif. Default: sarif
+          #download_external_modules: true # optional: download external terraform modules from public git repositories and terraform registry
+          #log_level: DEBUG # optional: set log level. Default WARNING
+          config_file: ./checkov_config.yaml
+          #baseline: cloudformation/.checkov.baseline # optional: Path to a generated baseline file. Will only report results not in the baseline.
+          #container_user: 1000 # optional: Define what UID and / or what GID to run the container under to prevent permission issues
