@@ -1,5 +1,7 @@
 # This is the checkov workflow with actions
-    on: [push]
+ 
+ 
+on: [push]
 jobs:
   checkov-job:
     runs-on: ubuntu-latest
@@ -8,11 +10,10 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@master
       - name: wget the config file
-        run:  mkdir config && wget -O config/checkov_config.yaml https://raw.githubusercontent.com/Lymer07/iac_checkov/master/config_checkov.yaml?token=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
+        run:  mkdir config && wget -O config/checkov_config.yaml https://raw.githubusercontent.com/sun1l-ares/iac_checkov/master/config_output.yaml
       - name: print the
         run:  'ls -al'
       - name:  pull the docker
         run:  docker pull bridgecrew/checkov
       - name: mount the 2 volumes and run checkov
-        run:  docker run --tty --volume $(pwd):/tf --workdir /tf bridgecrew/checkov --directory /tf/folder_1  --config-file /tf/config/checkov_config.yaml --external-checks-git https://github.com//iac_checkov.git/Lymer07/custom_checks
-        
+        run:  docker run --tty --volume $(pwd):/tf --workdir /tf bridgecrew/checkov --directory /tf/folder_1  --config-file /tf/config/checkov_config.yaml --external-checks-git https://github.com/sun1l-aries/iac_checkov.git//custom_checks
