@@ -1,0 +1,56 @@
+provider "aws" {
+  region = "eu-west-1"
+}
+
+data "aws_s3_bucket" "log_bucket" {
+  bucket = "il-log-bucket"
+}
+
+resource "aws_s3_bucket" "bucket" {
+  bucket = "il-insecure-tf-bucket"
+  acl    = "private"
+
+   
+  server_side_encryption_configuration {
+    rule {
+      apply_server_side_encryption_by_default {
+        kms_master_key_id = aws_kms_key.my_kms_key.arn
+        sse_algorithm     = "aws:kms"
+      }
+    }
+  }
+ versioning {
+    enabled = true
+  }
+
+  logging {
+    target_bucket = data.aws_s3_bucket.log_bucket.id
+    target_prefix = "log/"
+  }
+}
+
+resource "aws_kms_key" "my_kms_key" {
+  description             = "This key can be used to encrypt bucket objects"
+  deletion_window_in_days = 10
+  enable_key_rotation     = true
+}
+
+data "aws_vpc" "vpc" {
+  tags = {
+    Name = "my_vpc"
+  }
+}
+resource "aws_security_group" "group_a" {
+  name   = "group_a"
+  vpc_id = data.aws_vpc.vpc.id
+  description = "a group"
+}
+resource "aws_security_group_rule" "public-80" {
+  description       = "Public"
+  type              = "ingress"
+  from_port         = 80
+  to_port           = 80
+  protocol          = "tcp"
+  security_group_id = aws_security_group.group_a.id
+  cidr_blocks       = ["10.20.0.20/31"]
+}
