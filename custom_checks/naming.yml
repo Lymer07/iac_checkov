@@ -2,13 +2,13 @@ metadata:
  name: "to check nameing scheams for ec2 instances"
  id: CKV2_aws_6
  catagory: CONVENTION
-definition: 
-or:
+definition:
+     or:
      -cond_type: "attribute"
-          resource_types:
-          - "aws_s3_bucket"
-          attribute: "BucketName"
-          operator: "contains"
-          value: "LG"
+      resource_types:
+       - "aws_s3_bucket"
+      attribute: "BucketName"
+      operator: "contains"
+      value: "LG"
 
  
