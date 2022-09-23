@@ -2,12 +2,12 @@ provider "aws" {
   region = "eu-west-1"
 }
 
-data "aws_s3_bucket" "log_bucket" {
-  bucket = "il-log-bucket"
+data "lg_aws_s3_bucket" "log_bucket" {
+  bucket = "lg-log-bucket"
 }
 
-resource "aws_s3_bucket" "bucket" {
-  bucket = "il-insecure-tf-bucket"
+resource "lg_aws_s3_bucket" "bucket" {
+  bucket = "lg-insecure-tf-bucket"
   acl    = "private"
 
    
@@ -24,7 +24,7 @@ resource "aws_s3_bucket" "bucket" {
   }
 
   logging {
-    target_bucket = data.aws_s3_bucket.log_bucket.id
+    target_bucket = data.lg_aws_s3_bucket.log_bucket.id
     target_prefix = "log/"
   }
 }
