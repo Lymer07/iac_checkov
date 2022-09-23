@@ -8,8 +8,8 @@ or:
 
           resource_types:
           - "aws_s3_bucket"
-          attribute: "BucketName" // thing to be checked
-          operator: "contains"// the operator to check the thing by
-          value: "LG"// the value to be compared against
+          attribute: "BucketName"
+          operator: "contains"
+          value: "LG"
 
  

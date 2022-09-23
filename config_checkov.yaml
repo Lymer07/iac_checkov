@@ -2,7 +2,7 @@ branch: master
 #check:
 #  - CKV_DOCKER_1
 #compact: true not working
-#directory: custom_checks/
+#directory: terrformcode/
 #docker-image: sample-image
 #dockerfile-path: Dockerfile
 #download-external-modules: true
