@@ -1,5 +1,5 @@
 metadata:
- name: "to check nameing scheams for ec2 instances"
+ name: "to check naming scheams for ec2 instances"
  id: CKV2_aws_6
  catagory: CONVENTION
 definition:
@@ -10,5 +10,3 @@ definition:
       attribute: "BucketName"
       operator: "contains"
       value: "LG"
-
- 

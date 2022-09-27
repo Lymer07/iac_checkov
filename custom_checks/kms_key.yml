@@ -1,7 +1,7 @@
 metadata:
- name: "to check nameing scheams for ec2 instances"
- id: CKV2_aws_6
- catagory: CONVENTION
+ name: "to check naming scheams for ec2 instances"
+ id: "CKV2_AWS_1032"
+ catagory: "CONVENTION"
 definition:
      or:
      -cond_type: "attribute"
