@@ -1,6 +1,6 @@
 metadata:
  name: "enter the descriptor"// this is what will show during the check
- id: "CKV2_{platform type}_{opco}_custom_{number}"// enter the provider initials like AWS etc. ensure that the number is unique
+ id: "CKV2_{platform type}_custom_{number}"// enter the provider initials like AWS etc. ensure that the number is unique
  category: "NETWORKING"// pick out of the options for your category
 definition:
     or: //this is the operation can be replaced with "And"
