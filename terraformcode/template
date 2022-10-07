@@ -1,0 +1,32 @@
+metadata:
+ name: "enter the descriptor"// this is what will show during the check
+ id: "CKV2_{platform type}_{opco}_custom_{number}"// enter the provider initials like AWS etc. ensure that the number is unique
+ category: "NETWORKING"// pick out of the options for your category
+definition:
+    or: //this is the operation can be replaced with "And"
+    - cond_type: "connection"// this is must be "attribute" however it could be "connection" / "filter" This also designates the start of an item
+      resource_types:
+      - "aws_route_table"// can use all to be non-specific, but this is the resource type as specified in terraform
+      connected_resource_types:
+      - "aws_internet_gateway"
+      operator: "not_exists" // this is your condition checker
+-------------------------------------------------------------------------------// can have multiple items per operand, all items will be inputted in the operand on the same level 
+    - cond_type: "attribute"
+      resource_types:
+      - "aws_subnet"
+      attribute: "map_public_ip_on_launch"// this is the resource as specified in terraform
+      operator: "equals" // this is your condition checker
+      value: "false" // this is the value that you are checking against. It can be Boolean or another value
+    - and: // can have operands nested inside of other operands, all items will be inputted in the operand on the same level, have a "-" in front of a nested operand
+      - cond_type: "attribute"
+        resource_types:
+        - "aws_route_table"
+        attribute: "route.cidr_block"
+        operator: "equals"
+        value: "0.0.0.0/0"
+      - cond_type: "attribute"
+        resource_types:
+        - "aws_route_table"
+        attribute: "route.gateway_id"
+        operator: "not_exists"
+// there is no end statement just ensure items are completed
