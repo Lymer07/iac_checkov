@@ -1,0 +1,13 @@
+metadata:
+ name: "Use Custom Roles with Least Privilege permissions added to it."
+ id: "CKV2_AWS_b_custom_8"
+ category: "IAM"
+definition:
+  not: 
+  - cond_type: "attribute"
+  resource_types: 
+  - "aws_iam_role"
+  attribute: "assume_role_policy "
+  operator: "jsonpath_exists" 
+  value: "$.Statement[?(@.Action.indexOf('iam:CreateRole') != -1)]" 
+    

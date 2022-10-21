@@ -3,10 +3,10 @@ metadata:
  id: CKV2_aws_6
  catagory: CONVENTION
 definition:
-     or:
-     -cond_type: "attribute"
-      resource_types:
-       - "aws_s3_bucket"
-      attribute: "BucketName"
-      operator: "contains"
-      value: "LG"
+  or:
+  -cond_type: "attribute"
+  resource_types:
+  - "aws_s3_bucket"
+  attribute: "BucketName"
+  operator: "contains"
+  value: "LG"
