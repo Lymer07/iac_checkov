@@ -8,8 +8,7 @@ branch: master
 #download-external-modules: true
 #evaluate-variables: true
 #external-checks-dir:
-external-checks-git: 
-   - https://github.com/Lymer07/iac_checkov//custom_checks
+#external-checks-git: https://github.com/Lymer07/iac_checkov//custom_checks
 ##  - sample-dir
 #external-modules-download-path: .external_modules
 #framework: cloudformation,terraform
